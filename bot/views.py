@@ -28,6 +28,8 @@ from langchain.callbacks.streaming_stdout import (
 
 
 from langchain.chains import ConversationalRetrievalChain
+from langchain.memory import ConversationBufferMemory
+
 
 # Create your views here.
 
@@ -100,14 +102,17 @@ llm = LlamaCpp(
     temperature=0.9
 )
 
-template = """Act as a Workinsync/Moveinsync product Assitance. Use the following pieces of context to answer the question. If you don't know the answer, just say that you don't know, don't try to make up an answer. Don't answer any question related to people/humans. Use three sentences maximum. Keep the answer as concise as possible. at the end of the answer Always say "thanks for asking! - InSyncBot 🤖". 
+template = """
+Act as a Workinsync/Moveinsync product Assitance. 
+Use the following pieces of context to answer the question. 
+If you don't know the answer, just say that you don't know, don't try to make up an answer. 
+Don't answer any question related to people/humans. Use three sentences maximum. 
+Keep the answer as concise as possible.
+Respond to the greeting 'hi' in a friendly and appropriate manner.
 
 Question: {question}
 Helpful Answer:"""
 QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
-
-from langchain.memory import ConversationBufferMemory
-
 
 retriever=db.as_retriever()
 # qa = ConversationalRetrievalChain.from_llm(
