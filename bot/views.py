@@ -107,12 +107,6 @@ Helpful Answer:"""
 QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
 
 from langchain.memory import ConversationBufferMemory
-memory = ConversationBufferMemory(
-    memory_key="chat_history",
-    input_key="question",
-    output_key = "answer",
-    return_messages=True
-)
 
 
 retriever=db.as_retriever()
@@ -143,6 +137,13 @@ def getChatHistory(result):
 
 def say_hello(request):
     id = len(dic_qa) + 1
+    memory = ConversationBufferMemory(
+    memory_key="chat_history",
+    input_key="question",
+    output_key = "answer",
+    return_messages=True
+    )
+
     new_qa = ConversationalRetrievalChain.from_llm(
     llm,
     retriever=retriever,
